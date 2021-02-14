@@ -1,14 +1,17 @@
 package lesson3.deque;
 
 
+import lesson3.stack.IStack;
+import lesson3.stack.StackImpl;
+
 public class Lesson3_DZ_Main {
     public static void main(String[] args) {
-//        // TASK 1
+        // TASK 1
 //        String str = "abcd";
 //
 //        System.out.println(new StringBuilder(str).reverse());
 //
-//        Stack<Character> st = new StackImpl<>(str.length());
+//        IStack<Character> st = new StackImpl<>(str.length());
 //        for (int i = 0; i < str.length(); i++) {
 //            st.push(str.charAt(i));
 //        }

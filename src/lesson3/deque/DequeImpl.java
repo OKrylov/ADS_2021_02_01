@@ -16,7 +16,7 @@ public class DequeImpl<E> extends QueueImpl<E> implements Deque<E> {
 
     @Override
     public boolean insertRight(E value) {
-        return  super.insert(value);
+        return super.insert(value);
     }
 
     @Override
