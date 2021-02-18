@@ -18,7 +18,7 @@ public class Main {
         backpack.calcBestSet(items);
 
         for (Item item : backpack.getBestSet()) {
-            System.out.println(item.name() + " " + item.price());
+            System.out.println(item.getName() + " " + item.getPrice());
         }
 
         System.out.println("Total best price is " + backpack.getBestPrice());

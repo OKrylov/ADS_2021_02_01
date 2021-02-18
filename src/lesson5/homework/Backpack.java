@@ -17,7 +17,7 @@ public class Backpack {
     private  int calcWeight(List<Item> items) {
         int sumWeight = 0;
         for (Item item : items) {
-            sumWeight += item.weight();
+            sumWeight += item.getWeight();
         }
         return sumWeight;
     }
@@ -25,7 +25,7 @@ public class Backpack {
     private int calcPrice(List<Item> items) {
         int sumPrice = 0;
         for (Item item : items) {
-            sumPrice += item.price();
+            sumPrice += item.getPrice();
         }
         return sumPrice;
     }
