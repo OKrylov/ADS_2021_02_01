@@ -1,12 +1,15 @@
 package lesson2;
 
+import lesson5.RecSortedArrayImpl;
+
 import java.util.ArrayList;
 
 public class TestDynamicArray {
 
     public static void main(String[] args) {
-        Array<Integer> data = new ArrayImpl<>(4);
+//        Array<Integer> data = new ArrayImpl<>(4);
 //        Array<Integer> data = new SortedArrayImpl<>();
+        Array<Integer> data = new RecSortedArrayImpl<>();
         data.add(5);
         data.add(4);
         data.add(3);
@@ -16,8 +19,8 @@ public class TestDynamicArray {
         data.display();
 //        data.sortBubble();
 //        data.sortSelect();
-        data.sortInsert();
-        data.display();
+//        data.sortInsert();
+//        data.display();
 
         data.remove(Integer.valueOf(3));
         data.remove(2);
