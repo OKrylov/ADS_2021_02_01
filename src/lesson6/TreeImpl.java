@@ -1,6 +1,5 @@
 package lesson6;
 
-import java.util.function.Consumer;
 import java.util.Stack;
 
 public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
@@ -17,25 +16,38 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
 
     private int size;
     private Node<E> root;
+    private final int maxLevel;
 
+    public TreeImpl() {
+        this(0);
+    }
+
+    public TreeImpl(int maxLevel) {
+        this.maxLevel = maxLevel;
+    }
 
     @Override
-    public void add(E value) {
+    public boolean add(E value) {
         Node<E> newNode = new Node<>(value);
 
         if (isEmpty()) {
             root = newNode;
             size++;
-            return;
+            return true;
         }
 
         NodeAndParent nodeAndParent = doFind(value);
         if (nodeAndParent.current != null) {
             // nodeAndParent.current.setValue(value)
-            return;
+            return false;
         }
 
         Node<E> previous = nodeAndParent.parent;
+
+        int level = previous.getLevel() + 1;
+        if (level > maxLevel && maxLevel > 0) {
+            return false;
+        }
 
 //        Consumer<Node<E>> setter = previous.isLeftChild(value) ? previous::setLeftChild : previous::setRightChild;
 //        setter.accept(newNode);
@@ -47,6 +59,7 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
         }
 
         size++;
+        return true;
     }
 
     @Override
@@ -58,7 +71,11 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
     private NodeAndParent doFind(E value) {
         Node<E> current = root;
         Node<E> previous = null;
+        current.setLevel(1);
         while (current != null) {
+            if (previous != null) {
+                current.setLevel(previous.getLevel() + 1);
+            }
             if (current.getValue().equals(value)) {
                 return new NodeAndParent(current, previous);
             }
@@ -244,5 +261,21 @@ public class TreeImpl<E extends Comparable<? super E>> implements Tree<E> {
             nBlanks /= 2;
         }
         System.out.println("................................................................");
+    }
+
+    @Override
+    public boolean isBalanced() {
+        return isBalanced(root);
+    }
+
+    private boolean isBalanced(Node<E> node) {
+        return (node == null) ||
+                isBalanced(node.getLeftChild()) &&
+                        isBalanced(node.getRightChild()) &&
+                        Math.abs(height(node.getLeftChild()) - height(node.getRightChild())) <= 1;
+    }
+
+    private int height(Node<E> node) {
+        return node == null ? 0 : 1 + Math.max(height(node.getLeftChild()), height(node.getRightChild()));
     }
 }

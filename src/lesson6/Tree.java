@@ -8,7 +8,7 @@ public interface Tree<E extends Comparable<? super E>> {
         POST_ORDER,
     }
 
-    void add(E value);
+    boolean add(E value);
 
     boolean contains(E value);
 
@@ -21,5 +21,7 @@ public interface Tree<E extends Comparable<? super E>> {
     void display();
 
     void traverse(TraverseMode mode);
+
+    boolean isBalanced();
 
 }
