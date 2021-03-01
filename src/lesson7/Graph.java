@@ -138,4 +138,55 @@ public class Graph implements IGraph {
         vertex.setVisited(true);
         queue.add(vertex);
     }
+
+    @Override
+    public List<Stack<String>> findShortPathViaBfs(String startLabel, String finishLabel) {
+        int startIndex = indexOf(startLabel);
+        int finishIndex = indexOf(finishLabel);
+        if (startIndex == -1) {
+            throw new IllegalArgumentException("Invalid startLabel: " + startLabel);
+        }
+        if (finishIndex == -1) {
+            throw new IllegalArgumentException("Invalid finishLabel: " + finishLabel);
+        }
+
+        Queue<Vertex> queue = new ArrayDeque<>();
+
+        Vertex vertex = vertexList.get(startIndex);
+        visitVertex(queue, vertex);
+
+        List<Stack<String>> result = new ArrayList<>();
+        Vertex finishVertex = null;
+
+        while (!queue.isEmpty()) {
+            vertex = getNearUnvisitedVertex(queue.peek());
+            if (vertex == null) {
+                if (finishVertex != null) {
+                    finishVertex.setVisited(false);
+                }
+                queue.remove();
+            } else {
+                visitVertex(queue, vertex);
+                vertex.setPreviousVertex(queue.peek());
+                if (vertex.getLabel().equals(finishLabel)) {
+                    result.add(buildPath(vertex));
+                    finishVertex = vertex;
+                }
+            }
+        }
+
+        resetVertexState();
+        return result;
+    }
+
+    private Stack<String> buildPath(Vertex vertex) {
+        Stack<String> stack = new Stack<>();
+        Vertex current = vertex;
+        while (current != null) {
+            stack.push(current.getLabel());
+            current = current.getPreviousVertex();
+        }
+
+        return stack;
+    }
 }
